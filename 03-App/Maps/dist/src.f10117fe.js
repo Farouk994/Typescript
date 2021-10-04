@@ -136893,10 +136893,48 @@ var User = function () {
     };
   }
 
+  User.prototype.markerContent = function () {
+    return "User Name : " + this.name;
+  };
+
   return User;
 }();
 
 exports.User = User;
+},{"faker":"../node_modules/faker/index.js"}],"src/Company.ts":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Company = void 0;
+
+var faker_1 = __importDefault(require("faker"));
+
+var Company = function () {
+  function Company() {
+    this.companyName = faker_1.default.company.companyName();
+    this.catchPhrase = faker_1.default.company.catchPhrase();
+    this.location = {
+      lat: parseFloat(faker_1.default.address.latitude()),
+      lng: parseFloat(faker_1.default.address.longitude())
+    };
+  }
+
+  Company.prototype.markerContent = function () {
+    return "\n      <div>\n      <h2>Company Name : " + this.companyName + "</h2>\n      <h4>CatchPhrase : " + this.catchPhrase + "</h4>\n      </div>\n      ";
+  };
+
+  return Company;
+}();
+
+exports.Company = Company;
 },{"faker":"../node_modules/faker/index.js"}],"src/Account.ts":[function(require,module,exports) {
 "use strict";
 
@@ -136947,27 +136985,25 @@ var CustomMap = function () {
     });
   }
 
-  CustomMap.prototype.addUserMarker = function (user) {
-    new google.maps.Marker({
+  CustomMap.prototype.addMarker = function (mappable) {
+    var _this = this;
+
+    var marker = new google.maps.Marker({
       map: this.googleMap,
       position: {
-        lat: user.location.lat,
-        lng: user.location.lng
+        lat: mappable.location.lat,
+        lng: mappable.location.lng
       }
+    });
+    marker.addListener("click", function () {
+      var infoWindow = new google.maps.InfoWindow({
+        content: mappable.markerContent()
+      });
+      infoWindow.open(_this.googleMap, marker);
     });
   };
 
-  CustomMap.prototype.addAccountMarker = function (account) {
-    new google.maps.Marker({
-      map: this.googleMap,
-      position: {
-        lat: account.location.lat,
-        lng: account.location.lng
-      }
-    });
-  };
-
-  CustomMap.prototype.addCompany = function () {};
+  CustomMap.prototype.addCity = function () {};
 
   return CustomMap;
 }();
@@ -136983,17 +137019,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var User_1 = require("./User");
 
+var Company_1 = require("./Company");
+
 var Account_1 = require("./Account");
 
 var CustomMap_1 = require("./CustomMap");
 
 var user = new User_1.User();
 var account = new Account_1.Account();
-var custonMap = new CustomMap_1.CustomMap("map"); // custonMap.addUserMarker(user);
+var customMap = new CustomMap_1.CustomMap("map"); // const customAcc = new CustomMap("map");
+// customAcc.addAccountMarker(account);
 
-var customAcc = new CustomMap_1.CustomMap("map");
-customAcc.addAccountMarker(account);
-},{"./User":"src/User.ts","./Account":"src/Account.ts","./CustomMap":"src/CustomMap.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+customMap.addMarker(user);
+var company = new Company_1.Company();
+customMap.addMarker(company);
+},{"./User":"src/User.ts","./Company":"src/Company.ts","./Account":"src/Account.ts","./CustomMap":"src/CustomMap.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -137021,7 +137061,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63372" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54135" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
