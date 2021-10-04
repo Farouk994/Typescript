@@ -35,6 +35,8 @@ export class CustomMap {
    }
 
    addCompany() {}
+
+   addCity() {}
 }
 
 // Public means anyone outside this class can access it and call different functions attached to it
