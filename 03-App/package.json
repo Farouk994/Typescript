@@ -1,0 +1,22 @@
+{
+  "name": "03-App",
+  "version": "1.0.0",
+  "description": "Command tool to get typescript executed inside browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@types/faker": "^5.5.8",
+    "@types/google.maps": "^3.45.6",
+    "@types/googlemaps": "^3.43.3",
+    "faker": "^5.5.3"
+  }
+}
